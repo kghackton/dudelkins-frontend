@@ -3,7 +3,6 @@ import Vue from 'vue'
 import mapboxgl from 'mapbox-gl';
 
 import Popup from "./Popup";
-import {isFalse} from "vue/src/shared/util";
 
 export const Map_Events = {
     state: {
@@ -32,11 +31,11 @@ export const Map_Events = {
                         return filtered
                     }
                 }
-                if (getters.FILTER_CATEGORIES.length!==0){ //TODO: прописать условия на категории
-                    if (false){
-                        return filtered
-                    }
-                }
+                // if (getters.FILTER_CATEGORIES.length!==0){ //TODO: прописать условия на категории
+                //     if (false){
+                //         return filtered
+                //     }
+                // }
                 const anomalyClasses = Object.entries(event.anomalyClasses).filter(([anomClass, info])=>{
                     return anomClass in getters.FILTER_ANOMALY_CLASSES
                 }).reduce((acc,[anomClass, info])=>{
