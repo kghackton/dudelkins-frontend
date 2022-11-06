@@ -28,20 +28,35 @@ const ErrHandler = err=>{ //Если 403 или 401 - редиректит на 
 }
 const url = '/api'
 
+export function getAnomFull({limit, offset, from, to}={limit:200, offset: 0}){
+    const params = {limit, offset}
+    if(from) {
+        params.closedFrom = dayjs(from).format('YYYY-MM-DDTHH:mm:ssZ')
+    }
+    if(to) {
+        params.closedTo = dayjs(to).format('YYYY-MM-DDTHH:mm:ssZ')
+    }
+    params.isAbnormal = true
+    params.limit = 20000
+    return axios.get(`${url}/applications`,{params})
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
 
-export function getAnom({limit, offset}={limit:200, offset: 0}){
-    // const params = {limit, offset}
-    // if(fromImageTimestamp) {
-    //     params.from = dayjs(fromImageTimestamp).format('YYYY-MM-DDTHH:mm:ssZ')
-    // }
-    // if(toImageTimestamp) {
-    //     params.to = dayjs(toImageTimestamp).format('YYYY-MM-DDTHH:mm:ssZ')
-    // }
+export function getAnom({limit, offset, from, to, region, categoryId, anomalyClass}={limit:200, offset: 0}){
+    const params = {limit, offset}
+    if(from) {
+        params.closedFrom = dayjs(from).format('YYYY-MM-DDTHH:mm:ssZ')
+    }
+    if(to) {
+        params.closedTo = dayjs(to).format('YYYY-MM-DDTHH:mm:ssZ')
+    }
+    params.isAbnormal = true
+    params.region = region
+    params.categoryId = categoryId
+    params.anomalyClass = anomalyClass
 
-    return axios.get(`${url}/applications`,{params:{
-        isAbnormal: true,
-        limit:2000, offset
-    }})
+    return axios.get(`${url}/applications`,{params})
         .then(res=>res.data.data)
         .catch(ErrHandler)
 }

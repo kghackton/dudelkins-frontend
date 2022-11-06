@@ -1,7 +1,6 @@
 <template>
     <div class="pl-1 pt-1">
             <DatePicker
-                    class="mx-2"
                     type="datetime"
                     format="D MMM YYYY HH:mm"
                     :editable="false"
@@ -12,7 +11,6 @@
             />
         <p class="text--black"> - </p>
             <DatePicker
-                    class="ml-2"
                     type="datetime"
                     format="D MMM YYYY HH:mm"
                     :editable="false"

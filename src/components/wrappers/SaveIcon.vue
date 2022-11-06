@@ -2,11 +2,11 @@
     <ClipboardWrapper :val="saveValue" :msg="msg || undefined" :class="{left}">
         <div @mouseover="hoverOn" @mouseleave="hoverOff" style="width: 24px; height: 24px" class="d-flex align-center justify-center">
             <slot v-if="!hover">
-                <v-icon class="inactive">
+                <v-icon class="inactive" color="white">
                     mdi-identifier
                 </v-icon>
             </slot>
-            <v-icon v-else small>
+            <v-icon v-else small color="white">
                 mdi-content-copy
             </v-icon>
         </div>

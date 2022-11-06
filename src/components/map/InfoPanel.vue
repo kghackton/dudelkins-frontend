@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>{{$store.getters.OPENINFO}}</h1>
-        <div class="d-flex justify-center pa-2">
+        <div class="d-flex justify-center align-center pa-2 mr-10">
             <div class="text-left">
                 <v-chip v-for="label in labelsList" :key="label" :color="labelsDict[label].color" class="mt-2">
                     {{labelsDict[label].text}}
@@ -12,9 +11,7 @@
             </div>
             <SaveIcon class="ml-auto" :save-value="info ? info.rootId : ''"/>
     <!--        <v-icon class="ml-auto">mdi-identifier</v-icon>-->
-
-
-    </div>
+        </div>
         <v-subheader>
             Дата и время открытия:
 
@@ -134,5 +131,7 @@
 </script>
 
 <style scoped>
-
+    .v-subheader{
+        color: rgb(166, 189, 191)
+    }
 </style>

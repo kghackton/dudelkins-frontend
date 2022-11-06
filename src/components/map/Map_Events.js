@@ -28,17 +28,20 @@ export const Map_Events = {
             [6, 'orange']]
         ),
         MAP_EVENTS_FILTERED: (state, getters)=> {
-            return getters.MAP_EVENTS.reduce((filtered, event)=>{
-                // if (getters.FILTER_REGION){ //TODO: вернуть после фильтров
-                //     if (getters.FILTER_REGION !== event.region){
-                //         return filtered
-                //     }
-                // }
-                // if (getters.FILTER_CATEGORIES.length!==0){ //TODO: прописать условия на категории
-                //     if (false){
-                //         return filtered
-                //     }
-                // }
+            return (getters.MAP_EVENTS || []).reduce((filtered, event)=>{
+
+                if (getters.FILTER_REGION){
+                    if (getters.FILTER_REGION !== event.region){
+                        return filtered
+                    }
+                }
+
+                console.log(event.defectId, getters.FILTER_CATEGORIES)
+                if (getters.FILTER_CATEGORIES.length!==0){ //TODO: прописать условия на категории
+                    if (!getters.FILTER_CATEGORIES.includes(event.defectId.toString())){
+                        return filtered
+                    }
+                }
                 if(!event.gps){
                     return filtered
                 }
@@ -151,7 +154,7 @@ export const Map_Events = {
             state.events = events
         },
         MAP_EVENTS_CLEAR: (state)=>{
-            state.events = {}
+            state.events = []
         },
         MAP_SHOW_EVENTS: (state, getters)=>{
             const clust = getters.MAP.getSource('events-clustered')
@@ -259,41 +262,44 @@ export const Map_Events = {
 
         MAP_EVENTS_INIT: ({commit, dispatch, getters})=>{
 
-            API.getAnom({}).then(anomArr=>{
+            API.getAnomFull({from:getters.FILTER_STARTTIME?.toISOString(), to: getters.FILTER_ENDTIME?.toISOString()}).then(anomArr=>{
                 commit('MAP_EVENTS_SET', anomArr)
             })
 
-            getters.MAP.addSource('events-clustered', {
-                'type': 'geojson',
-                'data': {
-                    "type": "FeatureCollection",
-                    "features": [],
-                },
-                cluster: true,
-                clusterMaxZoom: 13, // Max zoom to cluster points on
-                clusterRadius: 80,
+            if(!getters.MAP.getSource('events-clustered')){
+                getters.MAP.addSource('events-clustered', {
+                    'type': 'geojson',
+                    'data': {
+                        "type": "FeatureCollection",
+                        "features": [],
+                    },
+                    cluster: true,
+                    clusterMaxZoom: 13, // Max zoom to cluster points on
+                    clusterRadius: 80,
 
-                clusterProperties:{
-                    eventsCount:['+', ['get', 'eventsCount']],
-                    closedWithoutCompletionForSameApplicant:['+', ['get', 'closedWithoutCompletionForSameApplicant']],
-                    closedTooFast:['+', ['get', 'closedTooFast']],
-                    closedWithCompletionButWithoutReturningsForSameApplicant:['+', ['get', 'closedWithCompletionButWithoutReturningsForSameApplicant']],
-                    badReview: ['+', ['get', 'badReview']],
-                    deviation: ['+', ['get', 'deviation']],
-                    closedForLessThan10MinutesWithNoReturnings: ['+', ['get', 'closedForLessThan10MinutesWithNoReturnings']],
-                    withReturnings: ['+', ['get', 'withReturnings']],
-                    DudelkINS: ['+', ['get', 'DudelkINS']],
-                }
-            });
+                    clusterProperties:{
+                        eventsCount:['+', ['get', 'eventsCount']],
+                        closedWithoutCompletionForSameApplicant:['+', ['get', 'closedWithoutCompletionForSameApplicant']],
+                        closedTooFast:['+', ['get', 'closedTooFast']],
+                        closedWithCompletionButWithoutReturningsForSameApplicant:['+', ['get', 'closedWithCompletionButWithoutReturningsForSameApplicant']],
+                        badReview: ['+', ['get', 'badReview']],
+                        deviation: ['+', ['get', 'deviation']],
+                        closedForLessThan10MinutesWithNoReturnings: ['+', ['get', 'closedForLessThan10MinutesWithNoReturnings']],
+                        withReturnings: ['+', ['get', 'withReturnings']],
+                        DudelkINS: ['+', ['get', 'DudelkINS']],
+                    }
+                });
+            }
 
-            getters.MAP.addSource('events-single', {
-                'type': 'geojson',
-                'data': {
-                    "type": "FeatureCollection",
-                    "features": [],
-                },
-            });
-
+            if(!getters.MAP.getSource('events-single')){
+                getters.MAP.addSource('events-single', {
+                    'type': 'geojson',
+                    'data': {
+                        "type": "FeatureCollection",
+                        "features": [],
+                    },
+                });
+            }
             dispatch('MAP_CLUSTERS_ON')
 
             getters.MAP.on('render', () => {
@@ -320,12 +326,14 @@ export const Map_Events = {
         },
 
         MAP_CLUSTERS_ON:({getters, dispatch})=>{
-            getters.MAP.addLayer({ //TODO: разобраться, для чего вообще нужен. Видимо, без него карта оптимизируется и не пересчитывает сорс кластера
-                id: 'unclustered-point',
-                type: 'circle',
-                source: 'events-clustered',
-                filter: false,
-            });
+            if(!getters.MAP.getLayer('unclustered-point')){
+                getters.MAP.addLayer({ //TODO: разобраться, для чего вообще нужен. Видимо, без него карта оптимизируется и не пересчитывает сорс кластера
+                    id: 'unclustered-point',
+                    type: 'circle',
+                    source: 'events-clustered',
+                    filter: false,
+                });
+            }
             dispatch('MAP_SHOW_EVENTS')
         },
         MAP_CLUSTERS_OFF:({getters})=>{

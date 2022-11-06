@@ -24,9 +24,6 @@
 </script>
 
 <style>
-    #eventsTable{
-        --events-table-row-height: 150px;
-    }
 </style>
 
 

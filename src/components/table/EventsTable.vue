@@ -44,6 +44,23 @@
             ScrollWrapper,
             EventsHeader,
             Event,
+        },
+        watch:{
+            '$store.getters.FILTER_STARTTIME'(){
+                this.$store.dispatch('events/LOADER_INITIAL')
+            },
+            '$store.getters.FILTER_ENDTIME'(){
+                this.$store.dispatch('events/LOADER_INITIAL')
+            },
+            '$store.getters.FILTER_ANOMALY_CLASSES'(){
+                this.$store.dispatch('events/LOADER_INITIAL')
+            },
+            '$store.getters.FILTER_CATEGORIES'(){
+                this.$store.dispatch('events/LOADER_INITIAL')
+            },
+            '$store.getters.FILTER_REGION'(){
+                this.$store.dispatch('events/LOADER_INITIAL')
+            }
         }
     }
 </script>

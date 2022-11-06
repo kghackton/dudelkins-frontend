@@ -1,7 +1,12 @@
 <template>
     <div class="pa-4">
+        <v-subheader>
+            Время создания
+        </v-subheader>
       <TimeFilter />
-      <v-select multiple
+      <v-select
+                chips
+                dark
         v-model="regionFilter"
         :items="regionsItems"
         item-value="name"
@@ -9,6 +14,7 @@
         label="Округ"
       ></v-select>
       <v-select multiple
+                dark
         v-model="categoriesFilter"
         :items="categoriesItems"
         item-value="id"
@@ -16,12 +22,15 @@
         label="Категория заявок"
       ></v-select>
       <v-select multiple
+                dark
         v-model="anomalyClassesFilter"
         :items="anomalyClassesItems"
         item-value="id"
         item-text="title"
         label="Классы аномальности"
-      ></v-select>
+      >
+
+      </v-select>
     </div>
 </template>
 
@@ -73,5 +82,7 @@
 </script>
 
 <style scoped>
-
+    .v-subheader{
+        color: #cdc5c5
+    }
 </style>

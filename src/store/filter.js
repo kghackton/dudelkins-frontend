@@ -52,14 +52,9 @@ export default {
         FILTER_TIME_SET:({getters, commit, dispatch }, {start, end})=>{
             commit('FILTER_STARTTIME_SET', start)
             commit('FILTER_ENDTIME_SET', end)
-            dispatch('FILTER_TIME_ONCHANGE')
+
         },
 
-        FILTER_TIME_ONCHANGE: ({getters, commit, dispatch })=>{
-            commit('MAP_EVENTS_CLEAR')
-            getters.MAP_FILTER_ACTIVESOURCES.forEach(srcUuid=>{
-                dispatch('MAP_FILTER_ACTIVESOURCES_ADD', srcUuid)
-            })
-        }
+
     }
 }

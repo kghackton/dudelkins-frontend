@@ -12,13 +12,11 @@ export default {
         EVENTS: state => state.events,
         EVENTS_TOTAL: state => state.totalevents,
         EVENTS_ACTIVEOPTIONS: (state,getters) => ({//TODO: прокинуть сюда фильтры с плашки
-            // sortBy: getters.EVENTS_SORT || 'created_at',
-            // asc: getters.EVENTS_ASC,
-            // labelUuids: getters.FILTER_EVENTS_LABELS,
-            // from: getters.FILTER_EVENTS_STARTTIME?.toISOString(),
-            // to: getters.FILTER_EVENTS_ENDTIME?.toISOString(),
-            // sourceTypes: getters.FILTER_EVENTS_SOURCETYPES,
-            // task: getters.FILTER_EVENTS_TASK,
+            from: getters.FILTER_STARTTIME?.toISOString(),
+            to: getters.FILTER_ENDTIME?.toISOString(),
+            region: getters.FILTER_REGION,
+            categoryId: getters.FILTER_CATEGORIES,
+            anomalyClass: getters.FILTER_ANOMALY_CLASSES
         }),
         EVENTS_SERVERBULKSIZE:()=>100,
         EVENTS_CLIENTBULKSIZE:()=>50,

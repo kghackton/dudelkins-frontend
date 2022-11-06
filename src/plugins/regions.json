@@ -1,42 +1,42 @@
 {
   "CAO": {
-      "name": "CAO",
+      "name": "ЦАО",
       "title": "ЦАО"
   },
   "SAO": {
-      "name": "SAO",
+      "name": "САО",
       "title": "САО"
   },
   "SVAO": {
-      "name": "SVAO",
+      "name": "СВАО",
       "title": "СВАО"
   },
   "VAO": {
-      "name": "VAO",
+      "name": "ВАО",
       "title": "ВАО"
   },
   "UVAO": {
-      "name": "UVAO",
+      "name": "ЮВАО",
       "title": "ЮВАО"
   },
   "UAO": {
-      "name": "UAO",
+      "name": "ЮАО",
       "title": "ЮАО"
   },
   "UZAO": {
-      "name": "UZAO",
+      "name": "ЮХАО",
       "title": "ЮХАО"
   },
   "ZAO": {
-      "name": "ZAO",
+      "name": "ЗАО",
       "title": "ЗАО"
   },
   "SZAO": {
-      "name": "SZAO",
+      "name": "СЗАО",
       "title": "СЗАО"
   },
   "ZelAO": {
-      "name": "ZelAO",
+      "name": "ЗелАО",
       "title": "ЗелАО"
   }
 }

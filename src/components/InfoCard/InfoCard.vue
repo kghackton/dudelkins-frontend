@@ -1,6 +1,6 @@
 <template>
     <v-card id="infocard" :class="{open:$store.getters.OPENINFO}">
-        <v-icon @click="onclick" style="position: absolute; top: 10px; right: 50px;">mdi-close</v-icon>
+        <v-icon @click="onclick" class="inactive" dark large style="position: absolute; top: 10px; right: 10px;">mdi-close</v-icon>
         <router-view/>
     </v-card>
 </template>
@@ -14,6 +14,11 @@
         computed: {
             id(){
                 return this.$route.params.id;
+            }
+        },
+        mounted(){
+            if(this.id){
+                this.$store.commit('OPENINFO')
             }
         },
         methods:{
@@ -39,6 +44,7 @@
     #infocard{
         --infoWidth: 300px;
         width: var(--infoWidth);
+        background-color: var(--col-1);
         position: fixed;
         right:0;
         top: 48px;

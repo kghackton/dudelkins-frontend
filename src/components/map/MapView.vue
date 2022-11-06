@@ -41,6 +41,18 @@
             '$store.getters.MAP_EVENTS_FILTERED_FEATURED'(){
                 this.$store.dispatch('MAP_SHOW_EVENTS') //ставит актуальные точки в сорсы
             },
+            '$store.getters.FILTER_STARTTIME'(){
+                this.$store.commit('MAP_EVENTS_CLEAR')
+                this.$store.dispatch('MAP_EVENTS_INIT')
+            },
+            '$store.getters.FILTER_ENDTIME'(){
+                this.$store.commit('MAP_EVENTS_CLEAR')
+                this.$store.dispatch('MAP_EVENTS_INIT')
+            },
+            '$store.getters.FILTER_ANOMALY_CLASSES'(){
+                this.$store.commit('MAP_EVENTS_CLEAR')
+                this.$store.dispatch('MAP_EVENTS_INIT')
+            }
             // '$store.getters.ANIM_POINTS'(){
             //     const src = this.$store.getters.MAP.getSource('events-new-animation')
             //     if(src){

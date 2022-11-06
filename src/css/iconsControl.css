@@ -71,9 +71,9 @@
     }
 
     .inactive {
-        opacity: 0.3
+        opacity: 0.5
     }
     .inactive:hover {
-        opacity:1
+        opacity:.95
     }
 

@@ -7,17 +7,19 @@
 <!--            </Cell>-->
 <!--        </th>-->
         <th class="text-center">
-            <p>Скриншот</p>
+            <p>Аномальность</p>
         </th>
         <th class="text-center" style="max-width: 150px; min-width: 150px">
+            <p>Дефект</p>
         </th>
         <th class="text-center">
-        </th>
-        <th>
-
+            <p>Время открытия</p>
         </th>
         <th class="text-center">
-
+            <p>Время закрытия</p>
+        </th>
+        <th class="text-center">
+            <p>Адрес</p>
         </th>
     </tr>
     <TableLoader type="events"/>
