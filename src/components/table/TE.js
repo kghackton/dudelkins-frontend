@@ -11,7 +11,7 @@ export default {
     getters: {
         EVENTS: state => state.events,
         EVENTS_TOTAL: state => state.totalevents,
-        EVENTS_ACTIVEOPTIONS: (state,getters) => ({//TODO: прокинуть сюда фильтры с плашки
+        EVENTS_ACTIVEOPTIONS: (state,getters) => ({
             from: getters.FILTER_STARTTIME?.toISOString(),
             to: getters.FILTER_ENDTIME?.toISOString(),
             region: getters.FILTER_REGION,

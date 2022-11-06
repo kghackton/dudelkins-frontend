@@ -35,7 +35,7 @@ export function createPiePoint(props) {
         'badReview',
         'DudelkINS'].reduce((sum,anomClass)=>{
 
-        const color = labels[anomClass].color //TODO: взять цвета
+        const color = labels[anomClass].color
 
         html += pieSegment(
             sum / total,
