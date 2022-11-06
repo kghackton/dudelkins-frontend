@@ -8,6 +8,7 @@ export default {
         region: null,
     }),
     getters:{
+        FILTERS: state => state,
         FILTER_STARTTIME: state=> state.starttime,
         FILTER_ENDTIME: state=> state.endtime,
         FILTER_ANOMALY_CLASSES: state => state.anomalyClasses,
@@ -34,6 +35,12 @@ export default {
         FILTER_REGION_SET:(state, region)=>{
             state.region = region
         },
+        FILTER_CATEGORIES_SET:(state, categories)=>{
+            state.categories = categories
+        },
+        FILTER_ANOMALY_SET:(state, anomalyClasses)=>{
+            state.anomalyClasses = anomalyClasses
+        },
         FILTER_STARTTIME_SET: (state, newval) => {
             state.starttime = newval
         },
@@ -56,5 +63,3 @@ export default {
         }
     }
 }
-
-
