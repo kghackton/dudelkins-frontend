@@ -51,7 +51,6 @@
       "no-unused-vars": "off",
       "vue/no-unused-vars": "off",
       "no-undef": "off",
-      "no-debugger": "off",
       "vue/no-unused-components": "off",
       "no-unreachable": "off",
       "vue/no-shared-component-data": "off"
@@ -61,5 +60,7 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "_id": "Anomalius@0.1.0",
+  "readme": "ERROR: No README data found!"
 }

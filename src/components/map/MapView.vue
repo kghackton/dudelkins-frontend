@@ -14,7 +14,6 @@
 
     import * as API from '@/api'
     import {mdiRefresh} from '@mdi/js'
-    import Legend from "./Legend";
     import ClusterSwitcher from "./ClusterSwitcher";
     // import MapExpertDialogWrapper from "./MapExpertDialogWrapper";
     import IconButton from "../IconButton";
@@ -24,7 +23,6 @@
         components: {
             // MapExpertDialogWrapper,
             ClusterSwitcher,
-            Legend,
             IconButton,
         },
 

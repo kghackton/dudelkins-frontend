@@ -136,10 +136,9 @@
     import {validationMixin} from 'vuelidate'
     import {required, maxLength, minLength} from 'vuelidate/lib/validators'
     import {mdiEyeOutline, mdiEyeOffOutline} from '@mdi/js'
-    import Cam from "../../components/Cam";
+
 
     export default {
-        components: {Cam},
         mixins: [validationMixin, routbackmixin('/map')],
         validations: {
             login: {

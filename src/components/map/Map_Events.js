@@ -6,7 +6,7 @@ import Popup from "./Popup";
 
 export const Map_Events = {
     state: {
-        events: {},//мапа по УНОМ
+        events: [],//массив
 
         // loadingSources:[], //id сорсов, по которым производится загрузка
 
@@ -36,6 +36,7 @@ export const Map_Events = {
                 //         return filtered
                 //     }
                 // }
+
                 const anomalyClasses = Object.entries(event.anomalyClasses).filter(([anomClass, info])=>{
                     return anomClass in getters.FILTER_ANOMALY_CLASSES
                 }).reduce((acc,[anomClass, info])=>{

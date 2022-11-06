@@ -17,18 +17,15 @@
         </v-subheader>
         <v-subheader>
             Классы аномальности:
-
         </v-subheader>
-        <Legend/>
     </div>
 </template>
 
 <script>
     import TimeFilter from "./TimeFilter";
-    import Legend from "../map/Legend";
     export default {
         name: "Filters",
-        components: {Legend, TimeFilter}
+        components: {TimeFilter}
     }
 </script>
 
