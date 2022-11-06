@@ -1,7 +1,7 @@
 <template>
-    <v-app-bar dense app clipped-right>
-        <v-col>
-            <v-tabs>
+    <v-app-bar dense app clipped-right color="var(--col-1)">
+        <v-col style>
+            <v-tabs color="var(--col-1)">
                 <v-tab to="/map">
                     <v-icon>mdi-map-outline</v-icon>
                 </v-tab>

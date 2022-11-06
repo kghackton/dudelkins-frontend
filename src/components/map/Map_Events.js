@@ -315,33 +315,6 @@ export const Map_Events = {
             });
         },
 
-        // MAP_EVENTS_SOURCE_ADD:({commit,getters,dispatch}, newsource)=>{
-        //     if(getters.MAP_EVENTS[newsource]){
-        //         return Promise.resolve(getters.MAP_EVENTS[newsource])
-        //     }
-        //
-        //     commit('MAP_EVENTS_SOURCE_LOADING_SET', {sourceId: newsource, newLoading: true})
-        //
-        //     const now = new Date()
-        //     const start = getters.MAP_FILTER_STARTTIME ? new Date(getters.FILTER_STARTTIME) : null
-        //     const end = getters.MAP_FILTER_ENDTIME ? new Date(getters.FILTER_ENDTIME) : null
-
-            // return API.getimages({
-            //     sourceUuids: [newsource],
-            //     fromImageTimestamp: start,
-            //     toImageTimestamp: end
-            // }).then(res=>{
-            //     const images = res.images
-            //     console.log(`Добавлено ${images.length}, id: ${newsource}`)
-            //     commit('MAP_EVENTS_ADD_TO_LIST', {
-            //         getters,
-            //         commit,
-            //         images
-            //     })
-            //     return images
-            // })
-            //     .finally(()=>{commit('MAP_EVENTS_SOURCE_LOADING_SET', {sourceId: newsource, newLoading: false})})
-        // },
         MAP_SHOW_EVENTS: ({getters, commit})=>{
             commit('MAP_SHOW_EVENTS', getters)
         },

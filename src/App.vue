@@ -4,7 +4,6 @@
     <NavBar/>
     <v-main app>
       <FilterPanel style="z-index: 2"/>
-      <InfoCard/>
       <router-view />
     </v-main>
   </v-app>

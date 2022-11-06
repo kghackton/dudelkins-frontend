@@ -13,16 +13,22 @@ import Events from "../components/table/TE";
 
 export default new Vuex.Store({
     state:()=>({
-        open: true
+        open: true,
+        openInfo: false
     }),
     getters:{
         OPEN:state=>state.open,
+        OPENINFO:state=>state.openInfo,
     },
     mutations:{
         OPEN:(state)=>{
             state.open = true
         },
-        CLOSE:state=>{state.open = false}
+        CLOSE:state=>{state.open = false},
+        OPENINFO:(state)=>{
+            state.openInfo = true
+        },
+        CLOSEINFO:state=>{state.openInfo = false}
     },
     modules: {
         Auth,

@@ -1,34 +1,34 @@
 {
     "closedForLessThan10MinutesWithNoReturnings": {
-        "color": "#C57C7C",
-        "text": "Описание"
+        "color": "#AA8F4B",
+        "text": "Закрытие быстрее 10 минут без возвратов на доработку"
     },
     "closedTooFast": {
-        "color": "#C5927C",
-        "text": "Описание"
+        "color": "#69AA4B",
+        "text": "Закрыта слишком быстро"
     },
     "closedWithCompletionButWithoutReturningsForSameApplicant": {
-        "color": "#C5B17C",
-        "text": "Описание"
+        "color": "#AA684B",
+        "text": "Нет необходимого возврата на доработку"
     },
     "closedWithoutCompletionForSameApplicant": {
-        "color": "#93C57C",
-        "text": "Описание"
+        "color": "#AA4B4B",
+        "text": "Закрыта без выполнения"
     },
     "deviation": {
-        "color": "#7CA2C5",
-        "text": "Описание"
+        "color": "#914BAA",
+        "text": "Отклонения от нормы времени выполнения"
     },
     "withReturnings": {
-        "color": "#B27CC5",
-        "text": "Описание"
+        "color": "#4B38BC",
+        "text": "Некачественное выполнение"
     },
     "badReview": {
-        "color": "#8BA9AC",
-        "text": "Описание"
+        "color": "#4B7CAA",
+        "text": "Плохой отзыв"
     },
     "DudelkINS": {
-        "color": "red",
-        "text": "Будет Дудь"
+        "color": "#628589",
+        "text": "дуделкИНС"
     }
 }
