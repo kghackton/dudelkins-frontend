@@ -27,6 +27,10 @@ const routes = [
         path: '/table',
         component: () => import('../components/table/EventView.vue'),
     },
+    {
+        path: '/stat',
+        component: () => import('../components/stat/StatPage.vue'),
+    },
 
     {
         path: '/404',

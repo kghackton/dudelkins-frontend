@@ -7,6 +7,7 @@ import {Auth} from './auth'
 // import {MapExpert} from "./expert";
 import {Map} from "../components/map/Map"
 import filter from "./filter";
+import stat from "./stat";
 import Events from "../components/table/TE";
 // import SourceLoader from "./resourceLoader";
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
         Auth,
         Map,
         filter,
+        stat,
         Events,
 
         // MapExpert,

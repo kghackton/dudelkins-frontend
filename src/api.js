@@ -46,3 +46,38 @@ export function getAnom({limit, offset}={limit:200, offset: 0}){
         .catch(ErrHandler)
 }
 
+export function getOne(id){
+    return axios.get(`${url}/applications/${id}`)
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
+
+export function auth() {
+
+    return axios.post(`${url}/auth` )
+        .catch(err=>{
+            if (err.response.data.code === 401 ) {
+                toAuth()
+                throw err
+            }
+            notify({text: `Ошибка запроса: ${err.response.data.code}`, theme: 'red'})
+            console.log(`Ошибка запроса: ${err}`)
+            throw err
+        })
+}
+
+export function getAnomalyClassesStat(params){
+    return axios.get(`${url}/applications/stats/anomalyClasses`, params)
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
+export function getAnomalyClassesHourStat(params){
+    return axios.get(`${url}/applications/stats/anomalyClassesHour`, params)
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
+export function getNormalAbnormalStat(params){
+    return axios.get(`${url}/applications/stats/normalAbnormal`, params)
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
