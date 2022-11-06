@@ -483,7 +483,6 @@ export const Map_Events = {
                     }
                 } else {
                     const coords = feature.geometry.coordinates;
-                    // const info = JSON.parse(props.info)
                     const id = props.UNOM
 
                     let marker = (getters.MARKERS)[id];
@@ -529,8 +528,7 @@ export const Map_Events = {
             for (const feature of features) {
                 const props = feature.properties;
                 const coords = feature.geometry.coordinates;
-                const info = JSON.parse(props.info)
-                const id = info.uuid
+                const id = props.UNOM
                 let marker = (getters.MARKERS)[id];
                 if (!marker) {
                     const el = SVG.createPiePoint(props);

@@ -23,6 +23,10 @@ const routes = [
         path: '/map',
         component: () => import('../components/map/MapView.vue'),
     },
+    {
+        path: '/table',
+        component: () => import('../components/table/EventView.vue'),
+    },
 
     {
         path: '/404',
