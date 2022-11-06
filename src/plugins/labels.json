@@ -1,0 +1,30 @@
+{
+    "closedForLessThan10MinutesWithNoReturnings": {
+        "color": "red",
+        "text": "Описание"
+    },
+    "closedTooFast": {
+        "color": "white",
+        "text": "Описание"
+    },
+    "closedWithCompletionButWithoutReturningsForSameApplicant": {
+        "color": "blue",
+        "text": "Описание"
+    },
+    "closedWithoutCompletionForSameApplicant": {
+        "color": "green",
+        "text": "Описание"
+    },
+    "deviation": {
+        "color": "yellow",
+        "text": "Описание"
+    },
+    "withReturnings": {
+        "color": "grey",
+        "text": "Описание"
+    },
+    "badReview": {
+        "color": "pink",
+        "text": "Описание"
+    }
+}

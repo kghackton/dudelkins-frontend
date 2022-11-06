@@ -40,7 +40,7 @@ export function getAnom({limit, offset}){
 
     return axios.get(`${url}/applications`,{params:{
         isAbnormal: true,
-        limit, offset
+        limit:2000, offset
     }})
         .then(res=>res.data.data)
         .catch(ErrHandler)

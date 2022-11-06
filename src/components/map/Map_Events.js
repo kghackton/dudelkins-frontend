@@ -1,6 +1,9 @@
 import * as API from '@/api'
 import Vue from 'vue'
 import mapboxgl from 'mapbox-gl';
+import labels from "@/plugins/labels.json"
+
+import * as SVG from "@/plugins/MapSvg"
 
 import Popup from "./Popup";
 
@@ -16,29 +19,32 @@ export const Map_Events = {
     getters: {
         MAP_EVENTS: state => state.events,
 
-        MAP_LABELS_COLOR_LIST: (state)=>(
+        MAP_LABELS_COLOR_LIST: (state)=>([
             [1, 'red'],
             [2, 'blue'],
             [3, 'yellow'],
             [4, 'green'],
             [5, 'pink'],
-            [6, 'orange']
+            [6, 'orange']]
         ),
         MAP_EVENTS_FILTERED: (state, getters)=> {
-            return state.events.reduce((filtered, event)=>{
-                if (getters.FILTER_REGION){
-                    if (getters.FILTER_REGION !== event.region){
-                        return filtered
-                    }
-                }
+            return getters.MAP_EVENTS.reduce((filtered, event)=>{
+                // if (getters.FILTER_REGION){ //TODO: вернуть после фильтров
+                //     if (getters.FILTER_REGION !== event.region){
+                //         return filtered
+                //     }
+                // }
                 // if (getters.FILTER_CATEGORIES.length!==0){ //TODO: прописать условия на категории
                 //     if (false){
                 //         return filtered
                 //     }
                 // }
+                if(!event.gps){
+                    return filtered
+                }
 
                 const anomalyClasses = Object.entries(event.anomalyClasses).filter(([anomClass, info])=>{
-                    return anomClass in getters.FILTER_ANOMALY_CLASSES
+                    return true || anomClass in getters.FILTER_ANOMALY_CLASSES //TODO: вернуть после фильтров
                 }).reduce((acc,[anomClass, info])=>{
                     acc[anomClass] = info
                     return acc
@@ -53,37 +59,73 @@ export const Map_Events = {
         },
         MAP_EVENTS_FILTERED_FEATURED:(state, getters)=>{
             const events = getters.MAP_EVENTS_FILTERED
-
             const eventsAcc = events.reduce((acc, event )=>{
                 const UNOM = event.UNOM
                 if(UNOM in acc){
-                    acc[UNOM] = [event]
-
-                } else {
                     acc[UNOM].push(event)
+                } else {
+                    acc[UNOM] = [event]
                 }
                 return acc
             }, {})
 
             const res = Object.entries(eventsAcc).map(([UNOM, events])=>{
 
-                // const classesNums = events.reduce(event=>{
-                //     const anomClass = Object.keys(event.anomalyClasses)
-                //     if ()
-                // })
+                const anomalyCount = events.reduce((acc, event)=>{
+                    Object.keys(event.anomalyClasses).forEach(anomClass=>{
+                        switch (anomClass) {
+                            case 'closed without completion for same applicant':
+                                acc.closedWithoutCompletionForSameApplicant++
+                                break;
+                            case 'closed too fast':
+                                acc.closedTooFast++
+                                break;
+                            case 'closed with completion but without returnings for same applicant':
+                                acc.closedWithCompletionButWithoutReturningsForSameApplicant++
+                                break;
+                            case 'bad review':
+                                acc.badReview++
+                                break;
+                            case 'deviation':
+                                acc.deviation++
+                                break;
+                            case 'closed for less than 10 minutes with no returnings':
+                                acc.closedForLessThan10MinutesWithNoReturnings++
+                                break;
+                            case 'with returnings':
+                                acc.withReturnings++
+                                break;
+                            default:
+                                console.log('Unknown Class', anomClass)
+                        }
+                    })
+                    return acc
+                }, {
+                    closedWithoutCompletionForSameApplicant: 0,
+                    closedTooFast: 0,
+                    closedWithCompletionButWithoutReturningsForSameApplicant: 0,
+                    badReview: 0,
+                    deviation: 0,
+                    closedForLessThan10MinutesWithNoReturnings:0,
+                    withReturnings: 0,
+                })
+
                 return {
                     "type": "Feature",
                     "properties": {
+                        UNOM,
                         eventsCount: events.length,
-                        events
+                        events,
+                        ...anomalyCount
                     },
                     "geometry": {
                         "type": "Point",
                         "coordinates": [
-                            events[0].gps.longitude,
-                            events[0].gps.latitude
+                            events[0].gps.latitude,
+                            events[0].gps.longitude
                         ]
-                    }
+                    },
+
                 }
             })
             return res
@@ -212,23 +254,6 @@ export const Map_Events = {
 //         },
 
         MAP_EVENTS_INIT: ({commit, dispatch, getters})=>{
-            getters.MAP.on('render', () => {
-                switch (getters.MAP_MODE) {
-                    case 'cluster':
-                        if (getters.MAP.isSourceLoaded('events-clustered')) {
-                            dispatch('UPDATE_CLUSTER_MARKERS');
-                            // dispatch('UPDATE_SINGLE_MARKERS');
-                        }
-                        return
-                    case 'heatmap':
-                        if (getters.MAP.isSourceLoaded('events-single')) {
-                            dispatch('UPDATE_HEATMAP_MARKERS');
-                        }
-                        return
-                    default:
-                        return
-                }
-            });
 
             API.getAnom({}).then(anomArr=>{
                 commit('MAP_EVENTS_SET', anomArr)
@@ -246,10 +271,13 @@ export const Map_Events = {
 
                 clusterProperties:{
                     eventsCount:['+', ['get', 'eventsCount']],
-                    // ...getters.MAP_LABELS_COLOR_LIST.reduce((acc, [num])=>{
-                    //     acc[num] = ['+',['case', ['in', num, ['get', 'labelNums']], 1, 0]]
-                    //     return acc
-                    // },{}),
+                    closedWithoutCompletionForSameApplicant:['+', ['get', 'closedWithoutCompletionForSameApplicant']],
+                    closedTooFast:['+', ['get', 'closedTooFast']],
+                    closedWithCompletionButWithoutReturningsForSameApplicant:['+', ['get', 'closedWithCompletionButWithoutReturningsForSameApplicant']],
+                    badReview: ['+', ['get', 'badReview']],
+                    deviation: ['+', ['get', 'deviation']],
+                    closedForLessThan10MinutesWithNoReturnings: ['+', ['get', 'closedForLessThan10MinutesWithNoReturnings']],
+                    withReturnings: ['+', ['get', 'withReturnings']],
                 }
             });
 
@@ -262,18 +290,36 @@ export const Map_Events = {
             });
 
             dispatch('MAP_CLUSTERS_ON')
+
+            getters.MAP.on('render', () => {
+                switch (getters.MAP_MODE) {
+                    case 'cluster':
+                        if (getters.MAP.isSourceLoaded('events-clustered')) {
+                            dispatch('UPDATE_CLUSTER_MARKERS');
+                            // dispatch('UPDATE_SINGLE_MARKERS');
+                        }
+                        return
+                    case 'heatmap':
+                        if (getters.MAP.isSourceLoaded('events-single')) {
+                            dispatch('UPDATE_HEATMAP_MARKERS');
+                        }
+                        return
+                    default:
+                        return
+                }
+            });
         },
 
-        MAP_EVENTS_SOURCE_ADD:({commit,getters,dispatch}, newsource)=>{
-            if(getters.MAP_EVENTS[newsource]){
-                return Promise.resolve(getters.MAP_EVENTS[newsource])
-            }
-
-            commit('MAP_EVENTS_SOURCE_LOADING_SET', {sourceId: newsource, newLoading: true})
-
-            const now = new Date()
-            const start = getters.MAP_FILTER_STARTTIME ? new Date(getters.FILTER_STARTTIME) : null
-            const end = getters.MAP_FILTER_ENDTIME ? new Date(getters.FILTER_ENDTIME) : null
+        // MAP_EVENTS_SOURCE_ADD:({commit,getters,dispatch}, newsource)=>{
+        //     if(getters.MAP_EVENTS[newsource]){
+        //         return Promise.resolve(getters.MAP_EVENTS[newsource])
+        //     }
+        //
+        //     commit('MAP_EVENTS_SOURCE_LOADING_SET', {sourceId: newsource, newLoading: true})
+        //
+        //     const now = new Date()
+        //     const start = getters.MAP_FILTER_STARTTIME ? new Date(getters.FILTER_STARTTIME) : null
+        //     const end = getters.MAP_FILTER_ENDTIME ? new Date(getters.FILTER_ENDTIME) : null
 
             // return API.getimages({
             //     sourceUuids: [newsource],
@@ -290,7 +336,7 @@ export const Map_Events = {
             //     return images
             // })
             //     .finally(()=>{commit('MAP_EVENTS_SOURCE_LOADING_SET', {sourceId: newsource, newLoading: false})})
-        },
+        // },
         MAP_SHOW_EVENTS: ({getters, commit})=>{
             commit('MAP_SHOW_EVENTS', getters)
         },
@@ -411,192 +457,9 @@ export const Map_Events = {
                 );
             }
 
-            function createDonutChart(props) {
-                const {cluster, cluster_id, eventsCount, point_count, point_count_abbreviated, ...countsObj } = props
-                let total = 0;
-                for (const key in countsObj) {
-                    const count = countsObj[key]
-                    const label = getters.DICT_LABELS.find(lbl=>lbl.number === +key)
-                    const labelText = label ? (label.title || label.codename) : null
-                    countsObj[key] = {
-                        offset: total,
-                        label: labelText,
-                        count,
-                    }
-                    total += count;
-                }
-
-                let fontSize
-                let r
-                switch (true){
-                    case (total >= 10000):
-                        fontSize = 24
-                        r = 64
-                        break;
-                    case (total >= 1000):
-                        fontSize = 22
-                        r = 50
-                        break;
-                    case (total >= 100):
-                        fontSize = 20
-                        r = 32
-                        break;
-                    case (total >= 10):
-                        fontSize = 18
-                        r = 24
-                        break;
-                    case (total <10):
-                        fontSize = 16
-                        r = 18
-                        break;
-                    default:
-                        fontSize = 16
-                        r = 18
-                }
-
-                const r0 = Math.round(r * 0.6);
-                const w = r * 2;
-
-                let html = `<div style="position: absolute" class="donut">
-                    <svg width="${w+2}" height="${w+2}" viewbox="-1 -1 ${w+3} ${w+3}" text-anchor="middle">
-                        <g stroke="black" stroke-width="2">`;
-                for(let num in countsObj||{}){
-                    const obj = countsObj[num]
-                    if(obj.count){
-                        const color = getters.MAP_LABELS_COLOR_LIST.find(x=>x[0]===+num)
-                        html += donutSegment(
-                            obj.offset / total,
-                            (obj.offset + obj.count) / total,
-                            r,
-                            r0,
-                            color ? color[1] : 'rgba(1,1,1,1)',
-                            obj.count,
-                            obj.label
-                        )
-                    }
-                }
-                const alltext = Object.entries(countsObj)
-                    .filter(([num, objInfo])=>objInfo.count>0)
-                    .map(([num, objInfo])=>{
-                        return `${objInfo.count} - ${objInfo.label}`
-                    })
-                    .join('\n')
-
-                html += `</g>
-                        <g>
-                            <circle cx="${r}" cy="${r}" r="${r0}" fill="white"/>
-                            <text class="mainCircleCounter" dominant-baseline="central" transform="translate(${r}, ${r})">
-                                ${total.toLocaleString()}
-                            </text>
-                            <title>${alltext}</title>
-                        </g>`;
-                html += '</svg></div>'
-                const el = document.createElement('div');
-                el.innerHTML = html;
-
-                return el.firstChild;
-            }
-            function donutSegment(start, end, r, r0, color, count, label) {
-                if (end - start === 1) {
-                    return `<path class="segment" d="
-                        M ${r} ${r - r0}
-                        A ${r0} ${r0} 0 1 0 ${r} ${r + r0}
-                        M ${r} ${r - r0}
-                        A ${r0} ${r0} 0 0 1 ${r} ${r + r0}
-                        M ${r} 0
-                        A ${r0} ${r0} 0 1 0 ${r} ${2*r}
-                        M ${r} 0
-                        A ${r0} ${r0} 0 0 1 ${r} ${2*r}"
-                         fill="${color}" >
-                    <title>
-                        ${count}: ${label || 'неизвестное нарушение'}
-                    </title>
-                </path>`;
-                }
-                const a0 = 2 * Math.PI * (start - 0.25);
-                const a1 = 2 * Math.PI * (end - 0.25);
-                const x0 = Math.cos(a0),
-                    y0 = Math.sin(a0);
-                const x1 = Math.cos(a1),
-                    y1 = Math.sin(a1);
-                const largeArc = end - start > 0.5 ? 1 : 0;
-
-// draw an SVG path
-                return `<path class="segment" d="M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
-                    r + r * y0
-                } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${
-                    r + r0 * x1
-                } ${r + r0 * y1} A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${
-                    r + r0 * y0
-                }" fill="${color}" >
-                    <title>
-                        ${count} - ${label || 'неизвестное нарушение'}
-                    </title>
-                </path>`;
-            }
-
-            function pieSegment(start, end, r, color) {
-                if (end - start === 1) {
-                    return `<circle 
-                                stroke="black" stroke-width="1" class="pointsegment" 
-                                cx="${r}" cy="${r}" r="${r}" 
-                                fill="${color}"
-                            />`
-                }
-                const a0 = 2 * Math.PI * (start - 0.25);
-                const a1 = 2 * Math.PI * (end - 0.25);
-                const x0 = Math.cos(a0),
-                    y0 = Math.sin(a0);
-                const x1 = Math.cos(a1),
-                    y1 = Math.sin(a1);
-                const largeArc = end - start > 0.5 ? 1 : 0;
-                return `<path  stroke="black" stroke-width="1" class="pointsegment" d="
-                        M ${r} ${r} 
-                        L ${r + r * x0} ${r + r * y0}
-                        A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}
-                        L ${r} ${r}"
-                fill="${color}" >
-                </path>`;
-            }
-            function createPiePoint(props) {
-                const labelNums = [...new Set(JSON.parse(props.labelNums))]
-                let r
-                const total = labelNums.length
-                switch (total){
-                    case 1:
-                        r = 7
-                        break;
-                    case 2:
-                        r = 9
-                        break;
-                    case 3:
-                        r = 11
-                        break;
-                    default:
-                        r = 11
-                }
-                const w = 2 * r
-                let html = `<div style="position: absolute" class="donut">
-                    <svg width="${w+2}" height="${w+2}" viewbox="-1 -1 ${w+3} ${w+3}" style="display: block">`
-
-                labelNums.forEach((num, i)=>{
-                    const color = getters.MAP_LABELS_COLOR_LIST.find(x=>x[0]===+num)
-                    html += pieSegment(
-                        i / total,
-                        (i + 1) / total,
-                        r,
-                        color ? color[1] : 'rgba(1,1,1,1)',
-                    )
-                })
-                html += '</svg></div>'
-                const el = document.createElement('div');
-                el.innerHTML = html;
-                return el.firstChild;
-            }
-
-
             const newMarkers = {};
-            const features = getters.MAP.querySourceFeatures('events-clustered');
+            const features = getters.MAP.getSource('events-clustered')._data.features;
+
             for (const feature of features) {
                 const props = feature.properties;
                 if (props.cluster){
@@ -605,7 +468,7 @@ export const Map_Events = {
 
                     let marker = (getters.MARKERS)[id];
                     if (!marker) {
-                        const el = createDonutChart(props);
+                        const el = SVG.createDonutChart(props);
                         marker = new mapboxgl.Marker({
                             element: el
                         }).setLngLat(coords);
@@ -620,13 +483,12 @@ export const Map_Events = {
                     }
                 } else {
                     const coords = feature.geometry.coordinates;
-                    const info = JSON.parse(props.info)
-                    const id = info.uuid
+                    // const info = JSON.parse(props.info)
+                    const id = props.UNOM
 
                     let marker = (getters.MARKERS)[id];
-                    // console.log(coords)
                     if (!marker) {
-                        const el = createPiePoint(props);
+                        const el = SVG.createPiePoint(props);
                         marker = new mapboxgl.Marker({
                             element: el
                         }).setLngLat(coords);
@@ -663,68 +525,7 @@ export const Map_Events = {
                 commit('MARKERS_ON_SCREEN_SET', {})
                 return
             }
-
-            function pieSegment(start, end, r, color) {
-                if (end - start === 1) {
-                    return `<circle 
-                                stroke="black" stroke-width="1" class="pointsegment" 
-                                cx="${r}" cy="${r}" r="${r}" 
-                                fill="${color}"
-                            />`
-                }
-                const a0 = 2 * Math.PI * (start - 0.25);
-                const a1 = 2 * Math.PI * (end - 0.25);
-                const x0 = Math.cos(a0),
-                    y0 = Math.sin(a0);
-                const x1 = Math.cos(a1),
-                    y1 = Math.sin(a1);
-                const largeArc = end - start > 0.5 ? 1 : 0;
-                return `<path  stroke="black" stroke-width="1" class="pointsegment" d="
-                        M ${r} ${r} 
-                        L ${r + r * x0} ${r + r * y0}
-                        A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}
-                        L ${r} ${r}"
-                fill="${color}" >
-                </path>`;
-            }
-            function createPiePoint(props) {
-                const labelNums = [...new Set(JSON.parse(props.labelNums))]
-                let r
-                const total = labelNums.length
-                switch (total){
-                    case 1:
-                        r = 7
-                        break;
-                    case 2:
-                        r = 9
-                        break;
-                    case 3:
-                        r = 11
-                        break;
-                    default:
-                        r = 11
-                }
-                const w = 2 * r
-                let html = `<div style="position: absolute" class="donut">
-                    <svg width="${w+2}" height="${w+2}" viewbox="-1 -1 ${w+3} ${w+3}" style="display: block">`
-
-                labelNums.forEach((num, i)=>{
-                    const color = getters.MAP_LABELS_COLOR_LIST.find(x=>x[0]===+num)
-                    html += pieSegment(
-                        i / total,
-                        (i + 1) / total,
-                        r,
-                        color ? color[1] : 'rgba(1,1,1,1)',
-                    )
-                })
-                html += '</svg></div>'
-                const el = document.createElement('div');
-                el.innerHTML = html;
-                return el.firstChild;
-            }
-
-
-            const features = getters.MAP.querySourceFeatures('events-single');
+            const features = getters.MAP.getSource('events-single')._data.features;
             for (const feature of features) {
                 const props = feature.properties;
                 const coords = feature.geometry.coordinates;
@@ -732,7 +533,7 @@ export const Map_Events = {
                 const id = info.uuid
                 let marker = (getters.MARKERS)[id];
                 if (!marker) {
-                    const el = createPiePoint(props);
+                    const el = SVG.createPiePoint(props);
                     marker = new mapboxgl.Marker({
                         element: el
                     }).setLngLat(coords);

@@ -36,7 +36,7 @@
         },
         watch:{
             '$store.getters.MAP_EVENTS_FILTERED_FEATURED'(){
-                this.$store.dispatch('MAP_SHOW_EVENTS')
+                this.$store.dispatch('MAP_SHOW_EVENTS') //ставит актуальные точки в сорсы
             },
             // '$store.getters.ANIM_POINTS'(){
             //     const src = this.$store.getters.MAP.getSource('events-new-animation')
