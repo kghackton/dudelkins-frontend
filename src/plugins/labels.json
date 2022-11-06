@@ -26,5 +26,9 @@
     "badReview": {
         "color": "#8BA9AC",
         "text": "Описание"
+    },
+    "DudelkINS": {
+        "color": "red",
+        "text": "Будет Дудь"
     }
 }

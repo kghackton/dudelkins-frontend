@@ -29,7 +29,7 @@ const ErrHandler = err=>{ //Если 403 или 401 - редиректит на 
 const url = '/api'
 
 
-export function getAnom({limit, offset}/*={limit:2000, offset: 0}*/){
+export function getAnom({limit, offset}={limit:200, offset: 0}){
     // const params = {limit, offset}
     // if(fromImageTimestamp) {
     //     params.from = dayjs(fromImageTimestamp).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -40,7 +40,7 @@ export function getAnom({limit, offset}/*={limit:2000, offset: 0}*/){
 
     return axios.get(`${url}/applications`,{params:{
         isAbnormal: true,
-        limit, offset
+        limit:2000, offset
     }})
         .then(res=>res.data.data)
         .catch(ErrHandler)

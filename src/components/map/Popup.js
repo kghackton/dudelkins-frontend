@@ -1,87 +1,55 @@
-import store from '@/store/store'
 
 import dayjs from "dayjs";
+import labels from "@/plugins/labels.json"
+import defects from "@/assets/defects.json"
 import 'dayjs/locale/ru'
 
 export default (properties)=>{
-    const info = JSON.parse(properties.info)
+    console.log(properties)
     const events = JSON.parse(properties.events)
-    const path = properties.img
-    setTimeout(()=>{
-        const canvas = document.getElementById(info.uuid)
+    const address = events[0].address
 
-        canvas.onclick = ()=>{
-            const results = events.reduce((acc, cur)=>{
-                const labelUuid = cur.labelUuid
-                acc[labelUuid] = cur.results
-                return acc
-            },
-            {})
-            const violation = {
-                id: info.uuid,
-                image:{
-                    uuid: info.uuid,
-                    url: path,
-                    width: info.width,
-                    height: info.height,
-                    createdAt: info.createdAt,
-                },
-                results,
-                keyId: info.uuid,
-                gps: info.gps,
-                sourceId: info.sourceUuid,
-                source: info.source,
-                camera: info.camera,
+    const rows = events.map(event=>{
+        console.log(event)
+        const labelsList = Object.keys(event.anomalyClasses).map(anCl=>{
+            switch (anCl){
+                case 'closed for less than 10 minutes with no returnings':
+                    return 'closedForLessThan10MinutesWithNoReturnings'
+                case 'closed too fast':
+                    return 'closedTooFast'
+                case 'closed with completion but without returnings for same applicant':
+                    return 'closedWithCompletionButWithoutReturningsForSameApplicant'
+                case 'closed without completion for same applicant':
+                    return 'closedWithoutCompletionForSameApplicant'
+                case 'deviation':
+                    return 'deviation'
+                case 'with returnings':
+                    return 'withReturnings'
+                case 'bad review':
+                    return 'badReview'
+                case 'DudelkINS':
+                    return 'DudelkINS'
+                default:
+                    console.error(`UNKNOWN LABEL ${anCl}`)
+                    return null
             }
-            store.commit('EXPERT_SETVIOLATION', violation)
-            store.commit('EXPERT_VIOLATION_SHOW')
-        }
-
-        canvas.width = info.width;
-        canvas.height = info.height;
-        const ctx = canvas.getContext("2d");
-
-        const background = new Image();
-        background.src = path;
-
-        background.onload = ()=>{
-            ctx.drawImage(background,0,0);
-            ctx.beginPath();
-            events.forEach(ev=>{
-                (ev.results.bBoxes || []).forEach(res=>{
-                    if( typeof (res.x0) === "number" && typeof(res.x1) === "number" && typeof(res.y0)==="number" && typeof(res.y1)==="number") {
-                                ctx.rect(res.x0, res.y0, res.x1 - res.x0, res.y1 - res.y0);
-                            }
-                })
-            })
-            const minsize = Math.min(info.width, info.height)
-            ctx.lineWidth = minsize/200
-            ctx.strokeStyle = '#ff0000';
-            ctx.stroke();
-        }
-
-        background.onerror = ()=>{
-            ctx.font = "84px Arial";
-            ctx.textAlign = "center"
-            ctx.fillStyle = "#aaaaaa"
-            ctx.fillText('Скриншот удалён в соответствии', info.width/2, info.height/2 - 40)
-            ctx.fillText('с политикой хранения данных', info.width/2, info.height/2 + 40)
-            ctx.font = "64px Arial";
-            const day = dayjs(new Date(info.createdAt)).locale('ru').format('D MMM YYYY')
-            ctx.fillText(`Дата скриншота: ${day}`, info.width/2, info.height/2 + 160)
-        }
-
-
-    },0)
-    const labelsList = events.reduce((acc, cur)=>{
-        acc.add(cur.labelUuid)
-        return acc
-    }, new Set([]))
-    const labelsElem = [...labelsList].map(lbl=>{
-        const labelObj = store.getters.DICT_LABELS.find(x=>x.uuid===lbl)
-        const label = labelObj?.title || labelObj?.uuid || 'Неизвестное нарушение'
-        return `<p class="text-start pl-4">${label}</p>`
+        })
+        const labelElements = labelsList.map(label=>{
+            return `<div style="border-radius: 10000px; background-color: ${labels[label].color}">
+                        <p>${labels[label].text}</p>
+                    </div>`
+        })
+        const defect = defects[event.defectId]
+        return `
+        <tr>
+            <td>${labelElements.join('')}</td>
+            <td>${defect || '<p class="undef">не известен ID дефекта</p>'}</td>
+            <td>${dayjs(new Date(event.createdAt)).locale('ru').format('D MMM HH:mm')}</td>
+            <td>${dayjs(new Date(event.closedAt)).locale('ru').format('D MMM HH:mm')}</td>
+        </tr>
+        `
     })
+
     return `
     <div 
         class="pa-2" 
@@ -89,16 +57,28 @@ export default (properties)=>{
         max-width: none;
         background-color: var(--col-7);
         border-radius: 4px; 
-        width: 416px;"
+        width: 600px;
+        overflow-y: scroll;
+        max-height: 400px;
+        "
+
     >
-        <div>
-            <canvas style="width: 400px" id="${info.uuid}" />
-        </div>
-        <div class="d-flex flex-row">
-        <p class="text-start">Нарушение:</p>
-        <div>
-            ${labelsElem.join('')}
-        </div>
-        </div>
+    ${address ? `<p style="font-size: 14px; --font-color: white" class="text-start">${address}</p>` : ''}
+    <table class="popuptable">
+    <thead>
+    <tr>
+        <th>Категория</th>
+        <th>Класс</th>
+        <th>Дата открытия</th>
+        <th>Дата закрытия</th>
+    </tr>
+    </thead>
+    <tbody>
+        ${rows.join('')}
+    </tbody>
+</table>
+        <td>
+            <tr></tr>
+        </td>
     </div>
 `}
