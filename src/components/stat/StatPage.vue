@@ -47,7 +47,7 @@
         series: [
           {
             type: 'sunburst',
-            center: ['50%', '50%'],
+            center: [0, '95%'],
             data: [],
             label: {
               rotate: 'radial',
