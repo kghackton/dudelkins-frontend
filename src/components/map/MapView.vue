@@ -2,7 +2,7 @@
     <v-row no-gutters id="mapView" style="height: 100%">
 <!--        <MapExpertDialogWrapper/>-->
         <v-col id="mapWrapper">
-            <ClusterSwitcher style="position: absolute; bottom: 20px; left: 15px; z-index: 1"/>
+            <ClusterSwitcher style="position: absolute; bottom: 20px; left: 65px; z-index: 1"/>
             <div id="map">
 
             </div>

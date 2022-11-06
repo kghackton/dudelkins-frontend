@@ -23,7 +23,7 @@
         overflow: hidden;
         position: fixed;
         left:0;
-        top: 100px;
+        top: 65px;
         height: 600px;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
