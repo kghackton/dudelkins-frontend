@@ -36,9 +36,15 @@ export function getAnomFull({limit, offset, from, to}={limit:200, offset: 0}){
         params.closedTo = dayjs(to).format('YYYY-MM-DDTHH:mm:ssZ')
     }
     params.isAbnormal = true
-    params.limit = 20000
+    params.limit = 30000
     return axios.get(`${url}/applications`,{params})
-        .then(res=>res.data.data)
+        .then(res=>res.data.data).then(arr=>{
+            if(arr.length>19000){
+                notify({theme:"lime", text: "Показаны первые 20000 аномалий"})
+            }
+            return arr
+        })
+
         .catch(ErrHandler)
 }
 
@@ -66,28 +72,8 @@ export function getOne(id){
         .catch(ErrHandler)
 }
 
-export function auth() {
-
-    return axios.post(`${url}/auth` )
-        .catch(err=>{
-            if (err.response.data.code === 401 ) {
-                toAuth()
-                throw err
-            }
-            notify({text: `Ошибка запроса: ${err.response.data.code}`, theme: 'red'})
-            console.log(`Ошибка запроса: ${err}`)
-            throw err
-        })
-}
-
-export function getOne(id){
-    return axios.get(`${url}/applications/${id}`)
-        .then(res=>res.data.data)
-        .catch(ErrHandler)
-}
 
 export function auth() {
-
     return axios.post(`${url}/auth` )
         .catch(err=>{
             if (err.response.data.code === 401 ) {
