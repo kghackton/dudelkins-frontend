@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 export default {
     state: ()=>({
-        starttime: new Date(dayjs(new Date()).format('YYYY-MM-DDT00:00:00'+'Z')),
-        endtime: new Date(dayjs(new Date()).format('YYYY-MM-DDT23:59:59'+'Z')),
+        starttime: new Date(dayjs(new Date()).format('2021-01-01T00:00:00'+'Z')),
+        endtime: new Date(dayjs(new Date()).format('2021-01-10T23:59:59'+'Z')),
         anomalyClasses:[],
         categories:[],
         region: null,

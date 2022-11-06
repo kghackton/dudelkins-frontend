@@ -95,8 +95,8 @@
             wrong: false,
             badconnection: false,
             showpassword: false,
-            login: process.env.NODE_ENV === 'development' ? 'hi' : '',
-            password: process.env.NODE_ENV === 'development' ? 'test' : '',
+            login: 'hi',
+            password:'test',
             prevPath:'/map',
             animate: false,
             mdiEyeOutline, mdiEyeOffOutline
