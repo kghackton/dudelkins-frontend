@@ -231,7 +231,7 @@
 						const distStat = {
 							name: district,
 							label: { color: '#fff' },
-							// itemStyle: { color: this.statusColors.GeneralEventsCount },
+							// itemStyle: { sty: this.statusColors.GeneralEventsCount },
 							children: [],
 						}
 						for (let zil in anomalyClasses[region][district]) {
