@@ -459,8 +459,9 @@ export const Map_Events = {
 
             const newMarkers = {};
             const features = getters.MAP.getSource('events-clustered')._data.features;
+            const features2 = getters.MAP.querySourceFeatures('events-clustered');
 
-            for (const feature of features) {
+            for (const feature of features2) {
                 const props = feature.properties;
                 if (props.cluster){
                     const coords = feature.geometry.coordinates;

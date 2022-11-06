@@ -54,7 +54,7 @@ function pieSegment(start, end, r, color) {
     }
     if (end - start === 1) {
         return `<circle 
-                                stroke="black" stroke-width="1" class="pointsegment" 
+                                stroke="#666666" stroke-width="1" class="pointsegment" 
                                 cx="${r}" cy="${r}" r="${r}" 
                                 fill="${color}"
                             />`
@@ -66,7 +66,7 @@ function pieSegment(start, end, r, color) {
     const x1 = Math.cos(a1),
         y1 = Math.sin(a1);
     const largeArc = end - start > 0.5 ? 1 : 0;
-    return `<path  stroke="black" stroke-width="1" class="pointsegment" d="
+    return `<path  stroke="#666666" stroke-width="1" class="pointsegment" d="
                         M ${r} ${r} 
                         L ${r + r * x0} ${r + r * y0}
                         A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}
@@ -87,8 +87,8 @@ export function createDonutChart(props) {
     let total = 0;
     for (const key in countsObj) {
         const count = countsObj[key]
-        const label = getters.DICT_LABELS.find(lbl=>lbl.number === +key)
-        const labelText = label ? (label.title || label.codename) : null
+        // const label = getters.DICT_LABELS.find(lbl=>lbl.number === +key)
+        const labelText = labels[key]?.text || null
         countsObj[key] = {
             offset: total,
             label: labelText,
@@ -130,17 +130,17 @@ export function createDonutChart(props) {
 
     let html = `<div style="position: absolute" class="donut">
                     <svg width="${w+2}" height="${w+2}" viewbox="-1 -1 ${w+3} ${w+3}" text-anchor="middle">
-                        <g stroke="black" stroke-width="2">`;
+                        <g stroke="#666666" stroke-width="2">`;
     for(let num in countsObj||{}){
         const obj = countsObj[num]
         if(obj.count){
-            const color = getters.MAP_LABELS_COLOR_LIST.find(x=>x[0]===+num)
+            const color = labels[num].color
             html += donutSegment(
                 obj.offset / total,
                 (obj.offset + obj.count) / total,
                 r,
                 r0,
-                color ? color[1] : 'rgba(1,1,1,1)',
+                color ? color : 'rgba(1,1,1,1)',
                 obj.count,
                 obj.label
             )
@@ -178,7 +178,7 @@ function donutSegment(start, end, r, r0, color, count, label) {
                         A ${r0} ${r0} 0 1 0 ${r} ${2*r}
                         M ${r} 0
                         A ${r0} ${r0} 0 0 1 ${r} ${2*r}"
-                         fill="${color}" >
+                         fill="${color}" stroke="#FFFFFF">
                     <title>
                         ${count}: ${label || 'неизвестное нарушение'}
                     </title>

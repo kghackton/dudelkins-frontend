@@ -1,30 +1,30 @@
 {
     "closedForLessThan10MinutesWithNoReturnings": {
-        "color": "red",
+        "color": "#C57C7C",
         "text": "Описание"
     },
     "closedTooFast": {
-        "color": "white",
+        "color": "#C5927C",
         "text": "Описание"
     },
     "closedWithCompletionButWithoutReturningsForSameApplicant": {
-        "color": "blue",
+        "color": "#C5B17C",
         "text": "Описание"
     },
     "closedWithoutCompletionForSameApplicant": {
-        "color": "green",
+        "color": "#93C57C",
         "text": "Описание"
     },
     "deviation": {
-        "color": "yellow",
+        "color": "#7CA2C5",
         "text": "Описание"
     },
     "withReturnings": {
-        "color": "grey",
+        "color": "#B27CC5",
         "text": "Описание"
     },
     "badReview": {
-        "color": "pink",
+        "color": "#8BA9AC",
         "text": "Описание"
     }
 }
