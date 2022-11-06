@@ -42,7 +42,7 @@
 			coreColors: ['#3f3f3f', '#2c2c2c', '#191919'],
 			statusColors,
 			sunburstOptions: {
-				backgroundColor: '#0100',
+				backgroundColor: 'rgba(0,0,0,0)',
 				tooltip: {},
 				series: [
 					{
@@ -64,9 +64,7 @@
 				],
 			},
 			barOptions: {
-				backgroundStyle: {
-					color: 'rgba(180, 180, 180, 0.2)'
-				},
+				backgroundColor: 'rgba(0,0,0,0)',
 				tooltip: {
 					trigger: 'axis',
 					axisPointer: {
