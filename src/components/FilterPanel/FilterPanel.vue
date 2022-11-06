@@ -20,6 +20,7 @@
         background-color: var(--col-1);
         --filterWidth: 286px;
         max-width: var(--filterWidth);
+        overflow: hidden;
         position: fixed;
         left:0;
         top: 100px;

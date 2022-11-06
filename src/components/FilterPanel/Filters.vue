@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-4">
+    <div class="pa-4 text-left">
         <v-subheader>
             Время создания
         </v-subheader>
@@ -11,23 +11,32 @@
         :items="regionsItems"
         item-value="name"
         item-text="title"
+        item-color="white"
+        :menu-props="{ dark: true, offsetY: true }"
         label="Округ"
       ></v-select>
       <v-select multiple
                 dark
+                style="max-width: 300px"
         v-model="categoriesFilter"
         :items="categoriesItems"
         item-value="id"
         item-text="title"
+        item-color="white"
+        :menu-props="{ dark: true, offsetY: true }"
         label="Категория заявок"
       ></v-select>
       <v-select multiple
                 dark
+                style="max-width: 300px"
         v-model="anomalyClassesFilter"
         :items="anomalyClassesItems"
         item-value="id"
         item-text="title"
+        item-color="white"
+        :menu-props="{ dark: true, offsetY: true }"
         label="Классы аномальности"
+
       >
 
       </v-select>
