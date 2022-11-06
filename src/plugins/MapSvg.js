@@ -56,7 +56,7 @@ function pieSegment(start, end, r, color) {
     }
     if (end - start === 1) {
         return `<circle 
-                                stroke="#666666" stroke-width="1" class="pointsegment" 
+                                stroke="#999999" stroke-width="1" class="pointsegment" 
                                 cx="${r}" cy="${r}" r="${r}" 
                                 fill="${color}"
                             />`
@@ -68,7 +68,7 @@ function pieSegment(start, end, r, color) {
     const x1 = Math.cos(a1),
         y1 = Math.sin(a1);
     const largeArc = end - start > 0.5 ? 1 : 0;
-    return `<path  stroke="#666666" stroke-width="1" class="pointsegment" d="
+    return `<path  stroke="#999999" stroke-width="1" class="pointsegment" d="
                         M ${r} ${r} 
                         L ${r + r * x0} ${r + r * y0}
                         A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}
@@ -132,7 +132,7 @@ export function createDonutChart(props) {
 
     let html = `<div style="position: absolute" class="donut">
                     <svg width="${w+2}" height="${w+2}" viewbox="-1 -1 ${w+3} ${w+3}" text-anchor="middle">
-                        <g stroke="#666666" stroke-width="2">`;
+                        <g stroke="#999999" stroke-width="2">`;
     for(let num in countsObj||{}){
         const obj = countsObj[num]
         if(obj.count){

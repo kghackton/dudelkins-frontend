@@ -2,11 +2,12 @@
     <v-row no-gutters id="mapView" style="height: 100%">
 <!--        <MapExpertDialogWrapper/>-->
         <v-col id="mapWrapper">
-            <ClusterSwitcher style="position: absolute; top: 20px; right: 15px; z-index: 1"/>
+            <ClusterSwitcher style="position: absolute; bottom: 20px; left: 15px; z-index: 1"/>
             <div id="map">
 
             </div>
         </v-col>
+        <InfoCard/>
     </v-row>
  </template>
 
@@ -17,10 +18,12 @@
     import ClusterSwitcher from "./ClusterSwitcher";
     // import MapExpertDialogWrapper from "./MapExpertDialogWrapper";
     import IconButton from "../IconButton";
+    import InfoCard from "../InfoCard/InfoCard";
     export default {
         name: 'MapView',
         data:()=>({mdiRefresh}),
         components: {
+            InfoCard,
             // MapExpertDialogWrapper,
             ClusterSwitcher,
             IconButton,

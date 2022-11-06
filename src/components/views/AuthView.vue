@@ -157,9 +157,9 @@
             wrong: false,
             badconnection: false,
             showpassword: false,
-            login: process.env.NODE_ENV === 'development' ? 'admin1' : '',
+            login: process.env.NODE_ENV === 'development' ? 'hi' : '',
             password: process.env.NODE_ENV === 'development' ? 'test' : '',
-            prevPath:'/web/tasks',
+            prevPath:'/map',
             animate: false,
             mdiEyeOutline, mdiEyeOffOutline
         }),
@@ -204,7 +204,7 @@
                 else {
                     this.animate=true
                     this.$store.dispatch('AUTH_LOGIN', { login: this.login, password: this.password })
-                        .then((x) => {
+                        .then(() => {
                             this.animate=false
                             this.routerBack()
                         })

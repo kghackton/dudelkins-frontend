@@ -62,6 +62,7 @@ th, td{
     width: 100%;
     border: none;
     margin-bottom: 20px;
+    margin-top: 12px;
     border-collapse: separate;
 }
 .popuptable thead th {
@@ -69,8 +70,9 @@ th, td{
     text-align: left;
     border: none;
     padding: 10px 15px;
-    background: #EDEDED;
+    background: #3A3B40;
     font-size: 14px;
+    color:#f4f4f4;
     border-top: 1px solid #ddd;
 }
 .popuptable tr th:first-child, .table tr td:first-child {
@@ -80,10 +82,10 @@ th, td{
     border-right: 1px solid #ddd;
 }
 .popuptable thead tr th:first-child {
-    border-radius: 20px 0 0 0;
+    border-radius: 12px 0 0 0;
 }
 .popuptable thead tr th:last-child {
-    border-radius: 0 20px 0 0;
+    border-radius: 0 12px 0 0;
 }
 .popuptable tbody td {
     text-align: left;
@@ -91,7 +93,8 @@ th, td{
     padding: 10px 15px;
     font-size: 14px;
     vertical-align: top;
-    background-color: #bbbbbb;
+    background-color: #27282B;
+    color:#f4f4f4;
 }
 .popuptable tbody tr:nth-child(even) {
     background: #F8F8F8;
@@ -100,8 +103,8 @@ th, td{
     border-bottom: 1px solid #ddd;
 }
 .popuptable tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 20px;
+    border-radius: 0 0 0 12px;
 }
 .popuptable tbody tr:last-child td:last-child {
-    border-radius: 0 0 20px 0;
+    border-radius: 0 0 12px 0;
 }

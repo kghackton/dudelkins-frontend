@@ -6,13 +6,13 @@
     --active-color: #16a716;
     --unactive-color: #dba80e;
 
-    --col-1: rgb(18, 18, 22);
-    --col-2: rgb(30, 30, 36);
-    --col-3: rgb(34, 34, 41);
-    --col-4: rgb(36, 36, 43);
-    --col-5: rgb(39, 39, 47);
-    --col-6: rgb(44, 44, 53);
-    --col-7: rgb(46, 46, 54);
+    --col-1: #121214;
+    --col-2: #27282B;
+    --col-3: #3A3B40;
+    --col-4: #4D4F56;
+    --col-5: #61636B;
+    --col-6: #747781;
+    --col-7: #9698A1;
     --col-8: rgb(55, 55, 66);
 
     --main-color: rgb(49, 50, 50);
@@ -24,30 +24,30 @@
 }
 
 
-* { /* LIGHT */
-    --theme: rgb(24, 54, 70);
-    --primary: rgb(100,255,218)/*rgb(0,182,255)*//*rgb(56, 111, 132);*/ /*#14a3bc;*/ /*#BB86FC*/;
-    --secondary: rgb(50, 134, 158);
+/** { !* LIGHT *!*/
+/*    --theme: rgb(24, 54, 70);*/
+/*    --primary: rgb(100,255,218)!*rgb(0,182,255)*!!*rgb(56, 111, 132);*! !*#14a3bc;*! !*#BB86FC*!;*/
+/*    --secondary: rgb(50, 134, 158);*/
 
-    --active-color: #16a716;
-    --unactive-color: #dba80e;
+/*    --active-color: #16a716;*/
+/*    --unactive-color: #dba80e;*/
 
-    --col-1: rgb(18, 18, 22);
-    --col-2: rgb(30, 30, 36);
-    --col-3: rgb(34, 34, 41);
-    --col-4: rgb(36, 36, 43);
-    --col-5: rgb(39, 39, 47);
-    --col-6: rgb(44, 44, 53);
-    --col-7: rgb(46, 46, 54);
-    --col-8: rgb(55, 55, 66);
+/*    --col-1: rgb(18, 18, 22);*/
+/*    --col-2: rgb(30, 30, 36);*/
+/*    --col-3: rgb(34, 34, 41);*/
+/*    --col-4: rgb(36, 36, 43);*/
+/*    --col-5: rgb(39, 39, 47);*/
+/*    --col-6: rgb(44, 44, 53);*/
+/*    --col-7: rgb(46, 46, 54);*/
+/*    --col-8: rgb(55, 55, 66);*/
 
-    --main-color: rgb(49, 50, 50);
-    --header-color: rgb(40, 43, 56);
-    --alt-color: rgb(28, 30, 31);
-    --font-color: #000000;
-    --clipboard-color: #719FC4;
-    --dropdown-color: rgb(66, 67, 79);
-}
+/*    --main-color: rgb(49, 50, 50);*/
+/*    --header-color: rgb(40, 43, 56);*/
+/*    --alt-color: rgb(28, 30, 31);*/
+/*    --font-color: #000000;*/
+/*    --clipboard-color: #719FC4;*/
+/*    --dropdown-color: rgb(66, 67, 79);*/
+/*}*/
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {

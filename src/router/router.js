@@ -22,6 +22,10 @@ const routes = [
     {
         path: '/map',
         component: () => import('../components/map/MapView.vue'),
+        children: [{
+            path: '/map/:id',
+            component: () => import('../components/map/InfoPanel'),
+        }]
     },
     {
         path: '/table',

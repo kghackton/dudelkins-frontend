@@ -7,19 +7,19 @@ import {lsget} from "@/plugins/localstorage";
 const toAuth = () => {
     store.dispatch('AUTH_LOGOUT')
         .then(() => {
-            router.push('/web/auth')
+            router.push('/auth')
         })
 }
 
 axios.defaults.timeout = 24 * 60 * 60 * 1000;
 export const checkToken = () => {
-    const token = lsget('auth', 'token') || ''
-    axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+    axios.defaults.headers.common['Authorization'] = `Basic ${btoa(`${lsget('auth', 'login')||''}:${lsget('auth', 'password')||''}`)}`
 }
 checkToken()
 
 const ErrHandler = err=>{ //Если 403 или 401 - редиректит на авторизацию. Иначе пробрасывает ошибку вверх
-    if (err?.response?.data?.code === 403 || err?.response?.data?.code === 401) {
+    console.log(err.response)
+    if (err?.response?.status === 403 || err?.response?.status === 401) {
         toAuth()
         return
     }
@@ -44,5 +44,25 @@ export function getAnom({limit, offset}={limit:200, offset: 0}){
     }})
         .then(res=>res.data.data)
         .catch(ErrHandler)
+}
+
+export function getOne(id){
+    return axios.get(`${url}/applications/${id}`)
+        .then(res=>res.data.data)
+        .catch(ErrHandler)
+}
+
+export function auth() {
+
+    return axios.post(`${url}/auth` )
+        .catch(err=>{
+            if (err.response.data.code === 401 ) {
+                toAuth()
+                throw err
+            }
+            notify({text: `Ошибка запроса: ${err.response.data.code}`, theme: 'red'})
+            console.log(`Ошибка запроса: ${err}`)
+            throw err
+        })
 }
 

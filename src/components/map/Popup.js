@@ -1,16 +1,25 @@
 
 import dayjs from "dayjs";
+import 'dayjs/locale/ru'
 import labels from "@/plugins/labels.json"
 import defects from "@/assets/defects.json"
-import 'dayjs/locale/ru'
+import router from "@/router/router"
+
 
 export default (properties)=>{
-    console.log(properties)
+    // console.log(properties)
     const events = JSON.parse(properties.events)
     const address = events[0].address
 
     const rows = events.map(event=>{
-        console.log(event)
+        // console.log(event)
+
+        setTimeout(()=>{
+            document.getElementById(`${event.rootId}-but`).addEventListener('click', ()=>{
+                router.push(`/map/${event.rootId}`)
+            })
+        },0)
+
         const labelsList = Object.keys(event.anomalyClasses).map(anCl=>{
             switch (anCl){
                 case 'closed for less than 10 minutes with no returnings':
@@ -46,6 +55,7 @@ export default (properties)=>{
             <td>${defect || '<p class="undef">не известен ID дефекта</p>'}</td>
             <td>${dayjs(new Date(event.createdAt)).locale('ru').format('D MMM HH:mm')}</td>
             <td>${dayjs(new Date(event.closedAt)).locale('ru').format('D MMM HH:mm')}</td>
+            <td><button id="${event.rootId}-but">Инфо</button></td>
         </tr>
         `
     })
@@ -55,8 +65,8 @@ export default (properties)=>{
         class="pa-2" 
         style="
         max-width: none;
-        background-color: var(--col-7);
-        border-radius: 4px; 
+        background-color: var(--col-1);
+        border-radius: 12px; 
         width: 600px;
         overflow-y: scroll;
         max-height: 400px;
@@ -71,6 +81,7 @@ export default (properties)=>{
         <th>Класс</th>
         <th>Дата открытия</th>
         <th>Дата закрытия</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
