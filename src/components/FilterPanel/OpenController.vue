@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-center align-center">
-        <v-icon id="arrow" @click="onclick" >mdi-chevron-left</v-icon>
+        <v-icon id="arrow" @click="onclick">mdi-chevron-left</v-icon>
     </div>
 </template>
 
