@@ -1,0 +1,36 @@
+
+html{
+    scrollbar-width: none;
+}
+*{
+    scrollbar-color: grey rgba(0,0,0,0);
+    scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar {
+    width:0px;
+}
+
+html *::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+    background-color: rgba(0,0,0,0.15)
+}
+
+html *::-webkit-scrollbar-thumb{
+    border-radius: 2px;
+    background-color: rgba(66, 67, 69, 0.6);
+    border: solid rgba(0,0,0,1) 1px;
+}
+
+html *::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(80, 98, 132, 0.6);
+}
+
+html *::-webkit-scrollbar-corner{
+     background-color: var(--htmlbackground);
+}
+
+.scroll{
+    overflow-y: scroll;
+}

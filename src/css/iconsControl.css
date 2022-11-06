@@ -1,0 +1,79 @@
+
+    .editButton{
+        color: limegreen !important;
+        opacity: 0.4;
+    }
+    tr:hover .editButton{
+        color: limegreen !important;
+        filter: drop-shadow(0 0 3px limegreen);
+        opacity: 0.6;
+    }
+
+    tr:hover .editButton:hover, .editButton:hover{
+        filter: drop-shadow(0 0 3px limegreen);
+        opacity: 1;
+    }
+
+    .infoButton{
+        color: deepskyblue !important;
+        opacity: 0.4;
+    }
+    tr:hover .infoButton{
+        color: deepskyblue !important;
+        filter: drop-shadow(0 0 3px deepskyblue);
+        opacity: .6;
+    }
+    tr:hover .infoButton:hover, .infoButton:hover{
+        filter: drop-shadow(0 0 3px deepskyblue);
+        opacity: 1;
+    }
+    .deleteButton{
+        color: indianred !important;
+        opacity: 0.4;
+    }
+    tr:hover .deleteButton{
+        color: indianred !important;
+        filter: drop-shadow(0 0 3px indianred);
+        opacity: .6;
+    }
+    tr:hover .deleteButton:hover, .deleteButton:hover{
+        filter: drop-shadow(0 0 3px indianred);
+        opacity: 1;
+    }
+    .downloadButton{
+        color: yellow !important;
+        opacity: 0.4;
+    }
+    tr:hover .downloadButton{
+        color: yellow !important;
+        filter: drop-shadow(0 0 3px yellow);
+        opacity: .6;
+    }
+    tr:hover .downloadButton:hover, .downloadButton:hover{
+        filter: drop-shadow(0 0 3px yellow);
+        opacity: 1;
+    }
+
+    .trackButton.show{
+        color:var(--primary);
+        filter: drop-shadow(0 0 3px var(--primary));
+    }
+    .trackButton.inactive{
+        color:white;
+        opacity: 0.3;
+    }
+    .trackButton.unshow{
+        color:white;
+        opacity: .8;
+    }
+    .trackButton.theme--light.v-icon:focus::after{
+        opacity: 0;
+    }
+
+    .inactive {
+        opacity: 0.3
+    }
+    .inactive:hover {
+        opacity:1
+    }
+

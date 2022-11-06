@@ -1,0 +1,6 @@
+.dialog.v-card>.v-toolbar{
+    background-color: rgb(28, 75, 99) !important;
+}
+.dialog.v-card{
+    background-color: var(--col-7) !important;
+}

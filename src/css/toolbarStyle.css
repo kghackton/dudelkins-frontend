@@ -1,0 +1,7 @@
+* {
+    --toolbarButtons: #bbbbbb;
+    --toolbarButtonsShadowHover: #00eeff;
+    --toolbarButtonsHover: white;
+
+    --toolbar-height: 66px;
+}

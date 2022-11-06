@@ -1,0 +1,68 @@
+$namespace: 'xmx'; // change the 'mx' to 'xmx'. then <date-picker prefix-class="xmx" />
+.#{$namespace}-input {
+    background-color: rgba(0,0,0,0) !important;
+}
+.#{$namespace}-datepicker-main, .#{$namespace}-time {
+    background-color: var(--dropdown-color) !important;
+}
+
+.#{$namespace}-icon-calendar,
+.#{$namespace}-icon-clear {
+    color: var(--font-color) !important;
+    &:hover{
+        color: white !important;
+    }
+}
+.#{$namespace}-calendar-content {
+    .cell {
+        border-radius: 50%;
+        background-color: inherit;
+        &.disabled{
+            background-color: rgba(255,255,255,.05) !important;
+            color: #828181 !important;
+        }
+        &:not(.disabled):hover{
+            color: var(--primary) !important;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+        &.in-range, &.hover-in-range{
+            background-color: rgba(100,255,218,.2) !important;
+        }
+        &:not(.in-range):hover {
+            background-color: inherit;
+        }
+        &.active {
+            color: white !important;
+            background-color: var(--secondary) !important;
+            &:hover{
+                filter: drop-shadow(0 0 3px white);
+            }
+        }
+    }
+}
+.#{$namespace}-time-column {
+    .#{$namespace}-time-item {
+        &:hover {
+            color: var(--primary) !important;;
+            background-color: rgba(0,0,0, 0) !important;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+        &.active {
+            color: white !important;
+            background-color: var(--secondary) !important;
+            &:hover{
+                filter: drop-shadow(0 0 3px white);
+            }
+        }
+    }
+}
+
+$input-color: white; //font input
+$default-color: var(--font-color);//font выбранной даты в календаре
+$input-border-color: var(--font-color);
+$input-hover-border-color: white;
+$primary-color: white;
+$calendar-active-background-color: #64ffda;
+
+
+@import '~vue2-datepicker/scss/index.scss';

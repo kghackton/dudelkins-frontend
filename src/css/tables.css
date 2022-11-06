@@ -1,0 +1,58 @@
+table thead tr th {
+    text-align: center !important;
+}
+
+.table {
+    /*overflow-y: hidden;*/
+    overflow-x: initial;
+    cursor: default;
+}
+
+.table th{
+    background-color: var(--header-color) !important;
+    z-index: 9 !important; /*для того,чтобы v-menu были под хэдером*/
+}
+
+.table thead tr{
+    height: 42px;
+}
+
+.table tbody tr {
+    transition: background-color .3s;
+}
+
+/*.table tbody tr:nth-child(2n) {*/
+/*    background-color: rgb(46, 46, 52);*/
+/*}*/
+.table tbody tr{
+    background-color: rgb(39, 39, 44);
+}
+/*.table tbody tr:nth-child(2n+1){*/
+/*    background-color: rgb(39, 39, 44);*/
+/*}*/
+
+/*.table tbody tr:nth-child(2n):hover{*/
+/*    background-color: rgb(63, 63, 74) !important;*/
+/*}*/
+
+.table tbody tr:hover{
+    background-color: rgb(63, 63, 74) !important;
+}
+
+/*.table tbody tr:nth-child(2n+1):hover{*/
+/*    background-color: rgb(63, 63, 74) !important;*/
+/*}*/
+
+.table tbody tr.dayEmpty, .table tbody tr.dayEmpty:hover{
+    background-color: #494c4c !important;
+}
+
+
+
+*{
+    --table-padding-vertical: 2vh;
+    --table-padding-horizontal: 2vw;
+}
+th, td{
+    background-color: inherit;
+}

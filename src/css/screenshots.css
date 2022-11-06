@@ -1,0 +1,12 @@
+.inTableScreenshot {
+    cursor: pointer;
+    height: 130px;
+    transition: transform 0.3s linear;
+
+}
+.inTableScreenshot:hover{
+    transform: scale(1.4);
+}
+.screenshotWrapper{
+    overflow: hidden;
+}
