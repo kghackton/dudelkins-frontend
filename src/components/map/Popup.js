@@ -35,7 +35,7 @@ export default (properties)=>{
             }
         })
         const labelElements = labelsList.map(label=>{
-            return `<div style="border-radius: 10000px; background-color: ${labels[label].color}">
+            return `<div style="border-radius: 10px; background-color: ${labels[label].color}; padding-left: 6px; padding-right: 6px; margin-bottom: 4px">
                         <p>${labels[label].text}</p>
                     </div>`
         })

@@ -9,6 +9,7 @@ export function createPiePoint(props) {
         + props.closedWithoutCompletionForSameApplicant
         + props.deviation
         + props.withReturnings
+        + props.DudelkINS
     switch (total){
         case 1:
             r = 7
@@ -31,7 +32,8 @@ export function createPiePoint(props) {
         'closedWithoutCompletionForSameApplicant',
         'deviation',
         'withReturnings',
-        'badReview'].reduce((sum,anomClass)=>{
+        'badReview',
+        'DudelkINS'].reduce((sum,anomClass)=>{
 
         const color = labels[anomClass].color //TODO: взять цвета
 

@@ -95,6 +95,9 @@ export const Map_Events = {
                             case 'with returnings':
                                 acc.withReturnings++
                                 break;
+                            case 'DudelkINS':
+                                acc.DudelkINS++
+                                break;
                             default:
                                 console.log('Unknown Class', anomClass)
                         }
@@ -108,6 +111,7 @@ export const Map_Events = {
                     deviation: 0,
                     closedForLessThan10MinutesWithNoReturnings:0,
                     withReturnings: 0,
+                    DudelkINS: 0
                 })
 
                 return {
@@ -278,6 +282,7 @@ export const Map_Events = {
                     deviation: ['+', ['get', 'deviation']],
                     closedForLessThan10MinutesWithNoReturnings: ['+', ['get', 'closedForLessThan10MinutesWithNoReturnings']],
                     withReturnings: ['+', ['get', 'withReturnings']],
+                    DudelkINS: ['+', ['get', 'DudelkINS']],
                 }
             });
 
